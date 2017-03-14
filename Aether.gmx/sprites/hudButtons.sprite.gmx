@@ -20,6 +20,7 @@
   <width>64</width>
   <height>64</height>
   <frames>
-    <frame index="0">images\hudWork_0.png</frame>
+    <frame index="0">images\hudButtons_0.png</frame>
+    <frame index="1">images\hudButtons_1.png</frame>
   </frames>
 </sprite>

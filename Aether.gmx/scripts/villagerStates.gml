@@ -1,4 +1,4 @@
-#define tickWoodcutter
+#define villagerStates
 //Count Weight
 var b;
 total = 0;
@@ -11,10 +11,10 @@ weight = total;
 
 //Check state
 switch(state) {
-    case state.move: WoodcutterMove();
+    case state.move: villagerMove();
     break;
     
-    case state.action: WoodcutterAction();
+    case state.action: villagerAction();
     break;
     
     case state.idle:
@@ -33,7 +33,7 @@ switch(state) {
     break;
 }
 
-#define WoodcutterAction
+#define villagerAction
 if(target != noone && weight < capacity-5) {
     speed = 0;
     if(instance_exists(target)) {
@@ -67,7 +67,7 @@ if(target != noone && weight < capacity-5) {
     state  = state.move;
 }
 
-#define WoodcutterMove
+#define villagerMove
 if(ActionAuto) {
     if(instance_exists(resource) && !(weight >= capacity-5)) {
         target = instance_nearest(workArea[0],workArea[1],resource);

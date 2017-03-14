@@ -13,10 +13,10 @@ for(i = 0; i < array_height_2d(carriedItems);i++) {
 weight = total;
 
 switch(state) {
-    case state.move: WoodcutterMove();
+    case state.move: script15();
     break;
     
-    case state.action: WoodcutterAction();
+    case state.action: script14();
     break;
     
     case state.idle:

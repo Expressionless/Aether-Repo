@@ -26,14 +26,19 @@
           <argument>
             <kind>1</kind>
             <string>///Init buttons
-for(i = 0; i &lt; 1; i++) {
-    button[i] = "";
-    buttonX[i] = view_wview-96;
-    buttonY[i] = view_hview-96;
-    overButton[i] = false;
+for(i = 0; i &lt; 2; i++) {
+    for(j = 0; j &lt; 1; j++) {
+        button[i, 0] = "";
+        button[i, j+1] = -1;
+        buttonX[i] = view_wview-192+i*80;
+        buttonY[i] = view_hview-96;
+        overButton[i] = false;
+    }
 }
 
-button[0] = "Set Work Area";
+button[0, 0] = "Set Work Area";
+button[1, 0] = "Auto Action";
+button[1, 1] = false;
 selectingArea = false;
 selected = false;
 x1 = 0;
@@ -101,13 +106,22 @@ for(i = 0; i &lt; array_length_1d(button);i++) {
     overButton[i] = (xx &lt; 32 &amp;&amp; yy &lt; 32);
     if(overButton[i]) {
         if(mouse_check_button_released(mb_right)) {
-            switch(button[i]) {
+            switch(button[i, 0]) {
                 case "Set Work Area":
-                    selectingArea = true;
+                    if(SELECTED_VILLAGER != -1) selectingArea = true;
+                break;
+                
+                case "Auto Action":
+                    if(SELECTED_VILLAGER.ActionAuto) {
+                        SELECTED_VILLAGER.ActionAuto = false;
+                    } else SELECTED_VILLAGER.ActionAuto = true;
                 break;
             }
         }
     }
+}
+if(SELECTED_VILLAGER != -1) {
+    button[1, 1] = SELECTED_VILLAGER.ActionAuto;
 }
 if(selectingArea) {
     if(mouse_check_button_pressed(mb_right)) {
@@ -240,14 +254,14 @@ for(i = 0; i &lt; array_height_2d(item); i++) {
             <kind>1</kind>
             <string>///Draw Villager HUD
 if(SELECTED_VILLAGER != -1) {
-    for(i = 0; i &lt; array_length_1d(button);i++) {
+    for(i = 0; i &lt; array_height_2d(button);i++) {
+        var x1 = view_xview[0]+buttonX[i];
+        var y1 = view_yview[0]+buttonY[i];
         var xx = abs(mouse_x + view_xview[0]-buttonX[i]-32);
         var yy = abs(mouse_y + view_yview[0]-buttonY[i]-32);
         draw_set_alpha(0.5+0.5*overButton[i]);
-        draw_sprite(hudWork, 0, view_xview[0]+buttonX[i],view_yview[i]+buttonY[i]);
-        draw_set_color(c_black);
-        draw_set_halign(fa_center);
-        draw_text(view_xview[0]+buttonX[i]+32,view_yview[0]+buttonY[i]+70,button[i]);
+        draw_sprite(hudButtons, i, x1, y1);
+        if(button[i, 1] != -1) draw_sprite(hudButtonCheck, button[i, 1], x1, y1);
         draw_set_alpha(1);
     }
 }

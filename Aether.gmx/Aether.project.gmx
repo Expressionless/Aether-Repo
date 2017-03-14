@@ -6,6 +6,8 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
+    <sprite>sprites\sprite13</sprite>
+    <sprite>sprites\missingTex</sprite>
     <sprites name="doodads">
       <sprites name="resources">
         <sprite>sprites\stoneChunk</sprite>
@@ -16,25 +18,26 @@
         <sprite>sprites\stoneStorage</sprite>
       </sprites>
     </sprites>
-    <sprites name="MouseStates">
-      <sprite>sprites\MouseBuilding</sprite>
-      <sprite>sprites\MouseSelecting</sprite>
+    <sprites name="HUD">
+      <sprites name="HudIcons">
+        <sprite>sprites\hudButtonCheck</sprite>
+        <sprite>sprites\hudButtons</sprite>
+      </sprites>
+      <sprites name="MouseStates">
+        <sprite>sprites\MouseBuilding</sprite>
+        <sprite>sprites\MouseSelecting</sprite>
+      </sprites>
     </sprites>
     <sprites name="ResourceIcons">
       <sprite>sprites\resSet</sprite>
     </sprites>
     <sprites name="Villagers">
       <sprite>sprites\VillagerBasic</sprite>
-      <sprite>sprites\VillagerWoodcutter</sprite>
-      <sprite>sprites\VillagerMiner</sprite>
       <sprite>sprites\VillagerBuilder</sprite>
       <sprite>sprites\VillagerFarmer</sprite>
+      <sprite>sprites\VillagerMiner</sprite>
+      <sprite>sprites\VillagerWoodcutter</sprite>
     </sprites>
-    <sprites name="HudIcons">
-      <sprite>sprites\hudWork</sprite>
-    </sprites>
-    <sprite>sprites\sprite13</sprite>
-    <sprite>sprites\missingTex</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -44,6 +47,12 @@
         <script>scripts\storage_init.gml</script>
       </scripts>
     </scripts>
+    <scripts name="External Scripts">
+      <script>scripts\locateTarget.gml</script>
+    </scripts>
+    <scripts name="HUD">
+      <script>scripts\drawHud.gml</script>
+    </scripts>
     <scripts name="Init">
       <script>scripts\game_init.gml</script>
     </scripts>
@@ -51,8 +60,8 @@
       <script>scripts\changeProf.gml</script>
       <script>scripts\villager_init.gml</script>
       <script>scripts\villagerTick.gml</script>
-      <scripts name="tickStates">
-        <script>scripts\tickWoodcutter.gml</script>
+      <script>scripts\villagerStates.gml</script>
+      <scripts name="tickStates OLD">
         <script>scripts\script13.gml</script>
         <script>scripts\tickMiner.gml</script>
         <script>scripts\tickBuilder.gml</script>
@@ -62,33 +71,34 @@
       </scripts>
       <script>scripts\manageSprite.gml</script>
     </scripts>
-    <script>scripts\locateTarget.gml</script>
-    <script>scripts\drawHud.gml</script>
   </scripts>
+  <fonts name="fonts"/>
   <objects name="objects">
     <objects name="doodads">
       <objects name="resources">
-        <object>objects\res_stone</object>
-        <object>objects\res_tree</object>
-        <object>objects\res_stump</object>
         <object>objects\res_parent</object>
+        <object>objects\res_stone</object>
+        <object>objects\res_stump</object>
+        <object>objects\res_tree</object>
       </objects>
       <objects name="Storages">
-        <object>objects\storage_parent</object>
         <object>objects\storage_food</object>
+        <object>objects\storage_parent</object>
         <object>objects\storage_stone</object>
         <object>objects\storage_wood</object>
       </objects>
     </objects>
-    <object>objects\hud_control</object>
-    <object>objects\obj_cursor</object>
     <objects name="Villagers">
-      <object>objects\village_parent</object>
       <object>objects\village_basic</object>
-      <object>objects\village_wood</object>
-      <object>objects\village_miner</object>
       <object>objects\village_builder</object>
       <object>objects\village_farmer</object>
+      <object>objects\village_miner</object>
+      <object>objects\village_parent</object>
+      <object>objects\village_wood</object>
+    </objects>
+    <objects name="HUD">
+      <object>objects\obj_cursor</object>
+      <object>objects\hud_control</object>
     </objects>
   </objects>
   <rooms name="rooms">

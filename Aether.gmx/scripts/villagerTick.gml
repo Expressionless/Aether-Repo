@@ -58,7 +58,7 @@ var p = argument0;
         break;
     
     }*/
-if(weight < capacity -5) tickWoodcutter();
+if(weight < capacity -5) villagerStates();
     else {
         if(instance_exists(storage)) {
             target = instance_nearest(x,y, storage);
