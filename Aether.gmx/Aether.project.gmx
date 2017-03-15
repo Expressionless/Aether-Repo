@@ -10,6 +10,7 @@
     <sprite>sprites\missingTex</sprite>
     <sprites name="doodads">
       <sprites name="resources">
+        <sprite>sprites\stoneChunkOLD</sprite>
         <sprite>sprites\stoneChunk</sprite>
         <sprite>sprites\treeSmall</sprite>
       </sprites>
@@ -76,6 +77,7 @@
       </scripts>
       <script>scripts\manageSprite.gml</script>
     </scripts>
+    <script>scripts\Hints.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_menu</font>
@@ -110,6 +112,7 @@
     </objects>
     <object>objects\menuController</object>
     <object>objects\terrainDebug</object>
+    <object>objects\TutorialControl</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\loadRoom</room>

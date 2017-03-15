@@ -33,7 +33,7 @@ prof = argument0;
 moveSpeed = 1.5;
 switch(prof) {
     case prof.woodc:
-        actionSpeed = 0.5;
+        actionSpeed = 7;
         resource = res_tree;
         storage = storage_wood;
     break;

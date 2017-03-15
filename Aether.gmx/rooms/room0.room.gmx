@@ -65,6 +65,7 @@
     <instance objName="village_parent" x="576" y="32" name="inst_3BA603B4" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="storage_stone" x="160" y="224" name="inst_D2548C09" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="storage_wood" x="256" y="64" name="inst_D13BCC03" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="TutorialControl" x="32" y="0" name="inst_DA80F5A5" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

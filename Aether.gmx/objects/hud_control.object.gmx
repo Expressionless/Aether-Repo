@@ -167,7 +167,7 @@ var margin = 16;
 x1 = view_xview+(view_wview-300);
 y1 = view_yview;
 x2 = x1+300;
-y2 = view_yview+view_hview-400;
+y2 = view_yview+view_hview-200-200*selected;
 
 drawHud(x1,y1,x2,y2,margin,.6);
 //If there is a selected villager, draw villager inventory
@@ -258,43 +258,6 @@ for(i = 0; i &lt; array_height_2d(item); i++) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Draw Villager HUD
-if(SELECTED_VILLAGER != -1) {
-    for(i = 0; i &lt; array_height_2d(button);i++) {
-        var xx1 = view_xview[0]+buttonX[i];
-        var yy1 = view_yview[0]+buttonY[i];
-        var xx = abs(mouse_x + view_xview[0]-buttonX[i]-32);
-        var yy = abs(mouse_y + view_yview[0]-buttonY[i]-32);
-        draw_set_alpha(0.5+0.5*overButton[i]);
-        draw_sprite(hudButtons, i, xx1, yy1);
-        if(button[i, 1] != -1) draw_sprite(hudButtonCheck, button[i, 1], xx1, yy1);
-        draw_set_alpha(1);
-    }
-}
-
-if(selectingArea &amp;&amp; SELECTED_VILLAGER != -1) {
-    draw_circle(mouse_x,mouse_y,SELECTED_VILLAGER.workArea[2],1);
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>///Draw Villager Resources
 if(SELECTED_VILLAGER != -1) {
     for(var b = 0; b &lt; array_height_2d(SELECTED_VILLAGER.carriedItems); b++) {
@@ -346,6 +309,43 @@ if(SELECTED_VILLAGER != -1)
             }
         }
     }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Draw Villager HUD
+if(SELECTED_VILLAGER != -1) {
+    for(i = 0; i &lt; array_height_2d(button);i++) {
+        var xx1 = view_xview[0]+buttonX[i];
+        var yy1 = view_yview[0]+buttonY[i];
+        var xx = abs(mouse_x + view_xview[0]-buttonX[i]-32);
+        var yy = abs(mouse_y + view_yview[0]-buttonY[i]-32);
+        draw_set_alpha(0.5+0.5*overButton[i]);
+        draw_sprite(hudButtons, i, xx1, yy1);
+        if(button[i, 1] != -1) draw_sprite(hudButtonCheck, button[i, 1], xx1, yy1);
+        draw_set_alpha(1);
+    }
+}
+
+if(selectingArea &amp;&amp; SELECTED_VILLAGER != -1) {
+    draw_circle(mouse_x,mouse_y,SELECTED_VILLAGER.workArea[2],1);
 }
 </string>
           </argument>
