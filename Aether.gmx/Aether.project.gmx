@@ -26,6 +26,7 @@
       <sprites name="MouseStates">
         <sprite>sprites\MouseBuilding</sprite>
         <sprite>sprites\MouseSelecting</sprite>
+        <sprite>sprites\MouseMenu</sprite>
       </sprites>
     </sprites>
     <sprites name="ResourceIcons">
@@ -42,6 +43,12 @@
   <backgrounds name="background"/>
   <paths name="paths"/>
   <scripts name="scripts">
+    <scripts name="Init">
+      <script>scripts\game_init.gml</script>
+    </scripts>
+    <scripts name="World Scripts">
+      <script>scripts\generateTerrain.gml</script>
+    </scripts>
     <scripts name="Doodads">
       <scripts name="Storages">
         <script>scripts\storage_init.gml</script>
@@ -49,12 +56,10 @@
     </scripts>
     <scripts name="External Scripts">
       <script>scripts\locateTarget.gml</script>
+      <script>scripts\drawButton.gml</script>
     </scripts>
     <scripts name="HUD">
       <script>scripts\drawHud.gml</script>
-    </scripts>
-    <scripts name="Init">
-      <script>scripts\game_init.gml</script>
     </scripts>
     <scripts name="Villager">
       <script>scripts\changeProf.gml</script>
@@ -72,7 +77,10 @@
       <script>scripts\manageSprite.gml</script>
     </scripts>
   </scripts>
-  <fonts name="fonts"/>
+  <fonts name="fonts">
+    <font>fonts\fnt_menu</font>
+    <font>fonts\fnt_hud</font>
+  </fonts>
   <objects name="objects">
     <objects name="doodads">
       <objects name="resources">
@@ -100,9 +108,12 @@
       <object>objects\obj_cursor</object>
       <object>objects\hud_control</object>
     </objects>
+    <object>objects\menuController</object>
+    <object>objects\terrainDebug</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\loadRoom</room>
+    <room>rooms\gffgf</room>
     <room>rooms\room0</room>
   </rooms>
   <help>

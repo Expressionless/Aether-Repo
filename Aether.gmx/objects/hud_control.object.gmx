@@ -35,7 +35,7 @@ for(i = 0; i &lt; 2; i++) {
         overButton[i] = false;
     }
 }
-
+MouseAction = false;
 button[0, 0] = "Set Work Area";
 button[1, 0] = "Auto Action";
 button[1, 1] = false;
@@ -105,10 +105,14 @@ for(i = 0; i &lt; array_length_1d(button);i++) {
     var yy = abs(-view_yview[0] + mouse_y - buttonY[i]-32);
     overButton[i] = (xx &lt; 32 &amp;&amp; yy &lt; 32);
     if(overButton[i]) {
-        if(mouse_check_button_released(mb_right)) {
+        if(mouse_check_button_released(mb_left)) {
             switch(button[i, 0]) {
                 case "Set Work Area":
-                    if(SELECTED_VILLAGER != -1) selectingArea = true;
+                    if(SELECTED_VILLAGER != -1) 
+                    {
+                        selectingArea = true;
+                        MouseAction = true;
+                    }
                 break;
                 
                 case "Auto Action":
@@ -123,13 +127,15 @@ for(i = 0; i &lt; array_length_1d(button);i++) {
 if(SELECTED_VILLAGER != -1) {
     button[1, 1] = SELECTED_VILLAGER.ActionAuto;
 }
-if(selectingArea) {
-    if(mouse_check_button_pressed(mb_right)) {
+if(mouse_check_button_pressed(mb_left)) {
+    if(selectingArea) {
         SELECTED_VILLAGER.workArea[0] = mouse_x;
         SELECTED_VILLAGER.workArea[1] = mouse_y;
         selectingArea = false;
+        MouseAction = false;
     }
 }
+
 </string>
           </argument>
         </arguments>
@@ -153,14 +159,15 @@ if(selectingArea) {
           <argument>
             <kind>1</kind>
             <string>///Draw HUD Backdrop
-
+depth = room_height*-1+1;
+draw_set_font(fnt_hud);
 var margin = 16;
 //Draw Global Inventory HUD
 
 x1 = view_xview+(view_wview-300);
 y1 = view_yview;
 x2 = x1+300;
-y2 = view_yview+view_hview-200-selected*200;
+y2 = view_yview+view_hview-400;
 
 drawHud(x1,y1,x2,y2,margin,.6);
 //If there is a selected villager, draw villager inventory
@@ -168,7 +175,6 @@ if(selected) drawHud(x1,y2,x2,y2+selected*200,margin,.6);
 
 //Draw HUD object
 draw_rectangle(x-2,y-2,x+2,y+2,1);
-
 </string>
           </argument>
         </arguments>
@@ -214,7 +220,7 @@ for(i = 0; i &lt; array_height_2d(item); i++) {
     var xx, yy;
     xx = xpos+16;
     yy = ypos+16;
-    over_res[i] = (abs(mouse_x - xx) &lt; 16 &amp;&amp; abs(mouse_y - yy &lt; 16));
+    over_res[i] = (abs(mouse_x - xx) &lt; 16 &amp;&amp; abs(mouse_y - yy) &lt; 16);
     if(over_res[i]) {
         draw_rectangle(xx-16,yy-16,xx+16,yy+16,1);
         for(var q = 0; q &lt; array_length_2d(item,i);q++) {
@@ -255,13 +261,13 @@ for(i = 0; i &lt; array_height_2d(item); i++) {
             <string>///Draw Villager HUD
 if(SELECTED_VILLAGER != -1) {
     for(i = 0; i &lt; array_height_2d(button);i++) {
-        var x1 = view_xview[0]+buttonX[i];
-        var y1 = view_yview[0]+buttonY[i];
+        var xx1 = view_xview[0]+buttonX[i];
+        var yy1 = view_yview[0]+buttonY[i];
         var xx = abs(mouse_x + view_xview[0]-buttonX[i]-32);
         var yy = abs(mouse_y + view_yview[0]-buttonY[i]-32);
         draw_set_alpha(0.5+0.5*overButton[i]);
-        draw_sprite(hudButtons, i, x1, y1);
-        if(button[i, 1] != -1) draw_sprite(hudButtonCheck, button[i, 1], x1, y1);
+        draw_sprite(hudButtons, i, xx1, yy1);
+        if(button[i, 1] != -1) draw_sprite(hudButtonCheck, button[i, 1], xx1, yy1);
         draw_set_alpha(1);
     }
 }
@@ -309,7 +315,7 @@ if(SELECTED_VILLAGER != -1)
     //Draw Resource Sprite and Quantity
     for(i = 0; i &lt; array_height_2d(villagerItem); i++) {
         var buffer = 24;
-        var xpos = x1+i*40+32, ypos = y1+125+selected*200+buffer;
+        var xpos = x1+i*40+32, ypos = y2-200+buffer;
         draw_sprite(resSet,i,xpos,ypos);
         
         //Measure Total 
@@ -323,8 +329,8 @@ if(SELECTED_VILLAGER != -1)
         var xx, yy;
         xx = xpos+16;
         yy = ypos+16;
-        over_res[i] = (abs(mouse_x - xx) &lt; 16 &amp;&amp; abs(mouse_y - yy &lt; 16));
-        if(over_res[i]) {
+        overVill_res[i] = (abs(mouse_x - xx) &lt; 16 &amp;&amp; abs(mouse_y - yy) &lt; 16);
+        if(overVill_res[i]) {
             draw_rectangle(xx-16,yy-16,xx+16,yy+16,1);
             for(var q = 0; q &lt; array_length_2d(villagerItem,i);q++) {
                 draw_set_color(c_black);

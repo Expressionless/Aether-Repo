@@ -11,12 +11,15 @@ enum prof {
     farmer = VillagerFarmer
 }
 enum mstate {
+    menu,
     selecting,
-    building
+    building,
+    modifying
 }
 enum mSprite {
     building = MouseBuilding,
-    selecting = MouseSelecting
+    selecting = MouseSelecting,
+    menu = MouseMenu
 }
 
 enum state {
