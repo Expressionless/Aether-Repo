@@ -26,7 +26,6 @@
           <argument>
             <kind>1</kind>
             <string>state = mstate.selecting;
-overButton = false;
 </string>
           </argument>
         </arguments>
@@ -51,7 +50,6 @@ overButton = false;
             <kind>1</kind>
             <string>x=mouse_x;
 y=mouse_y;
-if(room = loadRoom) state = mstate.menu;
 switch(state) {
     //Selecting Villagers
     case mstate.selecting:
@@ -62,10 +60,6 @@ switch(state) {
     case mstate.building:
         image_speed = 0.05;
         sprite_index = mSprite.building;
-    break;
-    
-    case mstate.menu:
-        sprite_index = mSprite.menu;
     break;
 }
 image_speed = 0.05
@@ -86,60 +80,22 @@ if(depth != room_height*-1) depth = room_height*-1;
         <exetype>2</exetype>
         <functionname></functionname>
         <codestring></codestring>
-        <whoName>other</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>//Case no villager Selected
-
-if(instance_exists(hud_control)) {
-    //Check if over a button
-    for(i = 0; i &lt; array_length_1d(hud_control.button);i++) {
-        if(hud_control.overButton[i]) {
-            overButton = true;
-            break;
-        } else if (i = array_length_1d(hud_control.button)-1) overButton = false;
-    }
-} else overButton = false;
-
-if(SELECTED_VILLAGER == -1 &amp;&amp; state != mstate.modifying) {
-    if(instance_exists(village_parent)) {
-        var inst = instance_place(x,y,village_parent);
-            if(inst != noone) {
-                SELECTED_VILLAGER = inst;
-            }
-    }
-}
-else if(instance_exists(hud_control)) {
-    if(!hud_control.MouseAction &amp;&amp; !overButton) {
-        SELECTED_VILLAGER = -1;
-    }
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_self();
+            <string>//Case no villager Selected
+if(SELECTED_VILLAGER == -1) {
+    if(instance_exists(village_parent)) {
+        var inst = instance_place(x,y,village_parent);
+            if(inst != noone) {
+                SELECTED_VILLAGER = inst;
+            }
+    }
+} else SELECTED_VILLAGER = -1;
+
 </string>
           </argument>
         </arguments>

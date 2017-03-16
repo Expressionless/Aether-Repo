@@ -7,12 +7,15 @@ depth = y * -1;
 prof_sprite = argument0;
 prof = argument0;
 sprite_index = prof_sprite;
+direction = 0;
 state = state.idle;
+moveSpeed = 3;
+doAction = false;
+target = noone;
 //Local Scripts
 statInit(prof);
 villagerOptions();
-desx = x;
-desy = y;
+
 for(i = 0; i < array_height_2d(global.ITEM); i++) {
     for(j = 0; j < array_length_2d(global.ITEM, i); j++) 
     {
@@ -31,16 +34,15 @@ for(i = 0; i < array_height_2d(global.ITEM); i++) {
 * 
 */
 prof = argument0;
-moveSpeed = 1.5;
 switch(prof) {
     case prof.woodc:
-        actionSpeed = 7;
+        actionSpeed = 1.5;
         resource = res_tree;
         storage = storage_wood;
     break;
     
     case prof.miner:
-        actionSpeed = 12;
+        actionSpeed = 4;
         resource = res_stone;
         storage = storage_stone;
     break;
@@ -53,7 +55,7 @@ switch(prof) {
 }
 workArea[0] = x;
 workArea[1] = y;
-workArea[2] = 128;
+workArea[2] = 256;
 capacity = 35;
 weight = 0;
 
@@ -64,6 +66,3 @@ actionSprite = argument0;
 
 #define villagerOptions
 ActionAuto = true;
-target = noone;
-doAction = false;
-desIsTarget = false;

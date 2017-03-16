@@ -26,61 +26,20 @@
           <argument>
             <kind>1</kind>
             <string>///Init buttons
-for(i = 0; i &lt; 2; i++) {
-    for(j = 0; j &lt; 1; j++) {
-        button[i, 0] = "";
-        button[i, j+1] = -1;
-        buttonX[i] = view_wview-192+i*80;
-        buttonY[i] = view_hview-96;
-        overButton[i] = false;
-    }
+for(i = 0; i &lt; 1; i++) {
+    button[i] = "";
+    buttonX[i] = view_wview-96;
+    buttonY[i] = view_hview-96;
+    overButton[i] = false;
 }
 
-MouseAction = false;
-button[0, 0] = "Set Work Area";
-button[1, 0] = "Auto Action";
-button[1, 1] = false;
+button[0] = "Set Work Area";
 selectingArea = false;
 selected = false;
 x1 = 0;
 y1 = 0;
 x2 = 0;
 y2 = 0;
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Init Hotkeys
-for(i = 0; i &lt; 10; i++) {
-    number[i, 0] = 48+i;
-    hotkey[i] = false;
-}
-number[0, 1] = vk_numpad0;
-number[1, 1] = vk_numpad1;
-number[2, 1] = vk_numpad2;
-number[3, 1] = vk_numpad3;
-number[4, 1] = vk_numpad4;
-number[5, 1] = vk_numpad5;
-number[6, 1] = vk_numpad6;
-number[7, 1] = vk_numpad7;
-number[8, 1] = vk_numpad8;
-number[9, 1] = vk_numpad9;
 </string>
           </argument>
         </arguments>
@@ -141,86 +100,20 @@ for(i = 0; i &lt; array_length_1d(button);i++) {
     var yy = abs(-view_yview[0] + mouse_y - buttonY[i]-32);
     overButton[i] = (xx &lt; 32 &amp;&amp; yy &lt; 32);
     if(overButton[i]) {
-        if(mouse_check_button_released(mb_left)) {
-            switch(button[i, 0]) {
+        if(mouse_check_button_released(mb_right)) {
+            switch(button[i]) {
                 case "Set Work Area":
-                    if(SELECTED_VILLAGER != -1) 
-                    {
-                        selectingArea = true;
-                        MouseAction = true;
-                    }
-                break;
-                
-                case "Auto Action":
-                    if(SELECTED_VILLAGER.ActionAuto) {
-                        SELECTED_VILLAGER.ActionAuto = false;
-                    } else SELECTED_VILLAGER.ActionAuto = true;
+                    selectingArea = true;
                 break;
             }
         }
-    }   
+    }
 }
-if(SELECTED_VILLAGER != -1) {
-    button[1, 1] = SELECTED_VILLAGER.ActionAuto;
-}
-if(mouse_check_button_pressed(mb_left)) {
-    if(selectingArea) {
+if(selectingArea) {
+    if(mouse_check_button_pressed(mb_right)) {
         SELECTED_VILLAGER.workArea[0] = mouse_x;
         SELECTED_VILLAGER.workArea[1] = mouse_y;
         selectingArea = false;
-        MouseAction = false;
-    }
-}
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Update hotkeys
-for(i = 0; i &lt; array_length_1d(hotkey);i++) {
-    hotkey[i] = (keyboard_check_released(number[i, 0]) || keyboard_check_released(number[i, 1]));
-    
-    switch(i) {
-        case 0: break;
-        
-        case 1: 
-            if(SELECTED_VILLAGER != -1 &amp;&amp; hotkey[i]) 
-            {
-                selectingArea = true;
-                MouseAction = true;
-            }
-        break;
-        
-        case 2:
-            if(SELECTED_VILLAGER != -1 &amp;&amp; hotkey[i]) {
-                if(SELECTED_VILLAGER.ActionAuto) {
-                    SELECTED_VILLAGER.ActionAuto = false;
-                } else SELECTED_VILLAGER.ActionAuto = true;
-            }
-        break;
-        case 3: break;
-        case 4: break;
-        case 5: break;
-        case 6: break;
-        case 7: break;
-        case 8: break;
-        case 9: break;
     }
 }
 </string>
@@ -246,15 +139,14 @@ for(i = 0; i &lt; array_length_1d(hotkey);i++) {
           <argument>
             <kind>1</kind>
             <string>///Draw HUD Backdrop
-depth = room_height*-1+1;
-draw_set_font(fnt_hud);
+
 var margin = 16;
 //Draw Global Inventory HUD
 
 x1 = view_xview+(view_wview-300);
 y1 = view_yview;
 x2 = x1+300;
-y2 = view_yview+view_hview-200-200*selected;
+y2 = view_yview+view_hview-200-selected*200;
 
 drawHud(x1,y1,x2,y2,margin,.6);
 //If there is a selected villager, draw villager inventory
@@ -262,6 +154,7 @@ if(selected) drawHud(x1,y2,x2,y2+selected*200,margin,.6);
 
 //Draw HUD object
 draw_rectangle(x-2,y-2,x+2,y+2,1);
+
 </string>
           </argument>
         </arguments>
@@ -307,7 +200,7 @@ for(i = 0; i &lt; array_height_2d(item); i++) {
     var xx, yy;
     xx = xpos+16;
     yy = ypos+16;
-    over_res[i] = (abs(mouse_x - xx) &lt; 16 &amp;&amp; abs(mouse_y - yy) &lt; 16);
+    over_res[i] = (abs(mouse_x - xx) &lt; 16 &amp;&amp; abs(mouse_y - yy &lt; 16));
     if(over_res[i]) {
         draw_rectangle(xx-16,yy-16,xx+16,yy+16,1);
         for(var q = 0; q &lt; array_length_2d(item,i);q++) {
@@ -325,6 +218,43 @@ for(i = 0; i &lt; array_height_2d(item); i++) {
     }
 }
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Draw Villager HUD
+if(SELECTED_VILLAGER != -1) {
+    for(i = 0; i &lt; array_length_1d(button);i++) {
+        var xx = abs(mouse_x + view_xview[0]-buttonX[i]-32);
+        var yy = abs(mouse_y + view_yview[0]-buttonY[i]-32);
+        draw_set_alpha(0.5+0.5*overButton[i]);
+        draw_sprite(hudWork, 0, view_xview[0]+buttonX[i],view_yview[i]+buttonY[i]);
+        draw_set_color(c_black);
+        draw_set_halign(fa_center);
+        draw_text(view_xview[0]+buttonX[i]+32,view_yview[0]+buttonY[i]+70,button[i]);
+        draw_set_alpha(1);
+    }
+}
+
+if(selectingArea &amp;&amp; SELECTED_VILLAGER != -1) {
+    draw_circle(mouse_x,mouse_y,SELECTED_VILLAGER.workArea[2],1);
+}
 </string>
           </argument>
         </arguments>
@@ -365,7 +295,7 @@ if(SELECTED_VILLAGER != -1)
     //Draw Resource Sprite and Quantity
     for(i = 0; i &lt; array_height_2d(villagerItem); i++) {
         var buffer = 24;
-        var xpos = x1+i*40+32, ypos = y2-200+buffer;
+        var xpos = x1+i*40+32, ypos = y1+125+selected*200+buffer;
         draw_sprite(resSet,i,xpos,ypos);
         
         //Measure Total 
@@ -379,8 +309,8 @@ if(SELECTED_VILLAGER != -1)
         var xx, yy;
         xx = xpos+16;
         yy = ypos+16;
-        overVill_res[i] = (abs(mouse_x - xx) &lt; 16 &amp;&amp; abs(mouse_y - yy) &lt; 16);
-        if(overVill_res[i]) {
+        over_res[i] = (abs(mouse_x - xx) &lt; 16 &amp;&amp; abs(mouse_y - yy &lt; 16));
+        if(over_res[i]) {
             draw_rectangle(xx-16,yy-16,xx+16,yy+16,1);
             for(var q = 0; q &lt; array_length_2d(villagerItem,i);q++) {
                 draw_set_color(c_black);
@@ -397,71 +327,6 @@ if(SELECTED_VILLAGER != -1)
         }
     }
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Draw Villager HUD
-if(SELECTED_VILLAGER != -1) {
-    for(i = 0; i &lt; array_height_2d(button);i++) {
-        var xx1 = view_xview[0]+buttonX[i];
-        var yy1 = view_yview[0]+buttonY[i];
-        var xx = abs(mouse_x + view_xview[0]-buttonX[i]-32);
-        var yy = abs(mouse_y + view_yview[0]-buttonY[i]-32);
-        draw_set_alpha(0.5+0.5*overButton[i]);
-        draw_sprite(hudButtons, i, xx1, yy1);
-        if(button[i, 1] != -1) draw_sprite(hudButtonCheck, button[i, 1], xx1, yy1);
-        draw_set_alpha(1);
-    }
-}
-
-if(selectingArea &amp;&amp; SELECTED_VILLAGER != -1) {
-    draw_circle(mouse_x,mouse_y,SELECTED_VILLAGER.workArea[2],1);
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Draw Hotkeys (DEBUG)
-/*
-for(i = 0; i &lt; 10; i++) {
-    draw_text(view_xview[0]+view_wview[0]/4*3
-             ,view_yview[0]+view_hview[0]/4+(i*48)
-             ,"Hotkey " +string(i)+": "+string(hotkey[i]));
-}
-*/
 </string>
           </argument>
         </arguments>
