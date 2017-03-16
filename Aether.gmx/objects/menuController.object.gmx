@@ -29,20 +29,19 @@
 buttonWidth = 225;
 buttonHeight = 72;
 for(i = 0; i &lt; 3; i++) {
-    button[i, 0] = "";
-    buttonX[i, 0] = x;
-    buttonY[i, 0] = y+96*i;
-    overButton[i, 0] = false;
+    button[0, i] = "";
+    buttonX[0, i] = x;
+    buttonY[0, i] = y+96*i;
+    overButton[0, i] = false;
 }
-
 //Local Enumerator??
 play = 0;
 options = 1;
 quit = 2;
 //Captioning Buttons
-button[play, 0] = "Play";
-button[options, 0] = "Options";
-button[quit, 0] = "Quit";
+button[0, play] = "Play";
+button[0, options] = "Options";
+button[0, quit] = "Quit";
 
 //Variables for Drawing
 textScale = .33;
@@ -55,6 +54,7 @@ textScale = .33;
 * draw_text(view_wview[0]/2,40,"Aether");
 */
 defunct = false;
+currentMenu = 0;
 </string>
           </argument>
         </arguments>
@@ -75,7 +75,53 @@ defunct = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string></string>
+            <string>///Defining and Initializing Options Buttons
+for(i = 0; i &lt; 4; i++) {
+    button[1, i] = "";
+    buttonX[1, i] = x;
+    buttonY[1, i] = y-(3*96)+96*i;
+    overButton[1, i] = false;
+}
+//Captioning Buttons
+button[1, 0] = "Fullscreen";
+button[1, 1] = "Keybinds";
+button[1, 2] = "Null";
+buttonX[1, 3] = x;
+buttonY[1, 3] = room_height-buttonHeight;
+button[1, 3] = "Back";
+
+//Variables for Drawing
+textScale = .33;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Defining and Initializing FullScreen Buttons
+for(i = 0; i &lt; 2; i++) {
+    button[2, i] = "";
+    buttonX[2, i] = x+buttonWidth/3;
+    buttonY[2, i] = y-(3*96)+96*i+buttonHeight;
+    overButton[2, i] = false;
+}
+button[2, 0] = "Fullscreen";
+button[2, 1] = "Windowed";
+</string>
           </argument>
         </arguments>
       </action>
@@ -127,37 +173,121 @@ defunct = false;
 buttonCount = array_height_2d(button);
 
 //Check for Each Button, whether or not the mouse is over the button
-for(i = 0; i &lt; buttonCount; i++) {
+for(i = 0; i &lt; array_height_2d(button); i++) {
     for(j = 0; j &lt; array_length_2d(button, i); j++) {
         var xx = abs(buttonX[i, j]+buttonWidth/2 - mouse_x);
         var yy = abs(buttonY[i, j]+buttonHeight/2 - mouse_y);
         overButton[i, j] = (xx &lt; buttonWidth/2) &amp;&amp; (yy &lt; buttonHeight/2);
     }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Check Button Events
 
-    //Check Whether the Mouse is over a button
-    for(j = 0; j &lt; array_length_2d(button, i); j++) {
-        if(overButton[i, j]) {
+//Check Whether the Mouse is over a button
+for(i = 0; i &lt; array_height_2d(button); i++) {
+    for(j = 0; j &lt; array_length_2d(button, currentMenu); j++) {
+        if(overButton[currentMenu, j]) {
             //If so check for a Mouse Left Click
             if(mouse_check_button_released(mb_left)) {
+                
                 //Check Which Button was clicked
-                switch(button[i, j]) {
-                    case "Play":
-                        room_goto(room0);
+                switch(currentMenu) {
+                    case 0:
+                        switch(button[0, j]) {
+                            case "Play":
+                                room_goto(room0);
+                            break;
+                            
+                            case "Options":
+                                currentMenu = 1;
+                            break;
+                            
+                            case "Quit":
+                                game_end();
+                            break;
+                        }
                     break;
                     
-                    case "Options":
-                        defunct = true;
-                        alarm[0] = 1.25*room_speed;
+                    case 1:
+                        switch(button[1, j]) {
+                            case "Fullscreen":
+                                currentMenu = 2;
+                            break;
+                            
+                            case "Keybinds":
+                                defunct = true;
+                                alarm[0] = 1.25*room_speed;
+                            break;
+                            
+                            case "Null":
+                                defunct = true;
+                                alarm[0] = 1.25*room_speed;
+                            break;
+                            
+                            case "Back":
+                                currentMenu = 0;
+                            break;
+                        }
                     break;
                     
-                    case "Quit":
-                        game_end();
+                    case 2:
+                        switch(button[2, j]) {
+                            case "Fullscreen":
+                                window_set_fullscreen(true);
+                                currentMenu = 1;
+                            break;
+                            
+                            case "Windowed":
+                                window_set_fullscreen(false);
+                                currentMenu = 1;
+                            break;
+                        }
                     break;
                 }
             }
         }
     }
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Update Config Settings
 </string>
           </argument>
         </arguments>
@@ -186,10 +316,10 @@ for(i = 0; i &lt; buttonCount; i++) {
 * drawButton(x,y+96,225,72,"Play", 1, scale, scale);
 */
 draw_set_font(fnt_menu);
-for(i = 0; i &lt; array_height_2d(button); i++) {
-draw_set_alpha(.5+.5*overButton[i, 0]);
-    drawButton(buttonX[i, 0], buttonY[i, 0] //Set X and Y Coordinate for drawing the specified Button
-    , buttonWidth, buttonHeight, button[i, 0], 1 //Set Width Height, and True for scalable text
+for(i = 0; i &lt; array_length_2d(button, currentMenu); i++) {
+draw_set_alpha(.5+.5*overButton[currentMenu, i]);
+    drawButton(buttonX[currentMenu, i], buttonY[currentMenu, i] //Set X and Y Coordinate for drawing the specified Button
+    , buttonWidth, buttonHeight, button[currentMenu, i], 1 //Set Width Height, and True for scalable text
     , textScale, textScale); //Set the scale for the text
 }
 draw_text(view_wview[0]/2,40,"Aether");
@@ -201,6 +331,7 @@ if(defunct) { //Display for 2.5 Seconds
     draw_set_alpha(1);
     //}
 }
+draw_text(500,500,FULLSCREEN);
 </string>
           </argument>
         </arguments>
