@@ -1,4 +1,5 @@
 #define game_init
+configSettings();
 initGlobals();
 initStorage();
 
@@ -77,3 +78,12 @@ for(i = 0; i < 10; i++) {
     global.storage[storage.wood, i] = 0;
     global.storage[storage.food, i] = 0;
 }
+#define configSettings
+///configSettings()
+enum fs {
+    windowed,
+    fullscreen
+}
+globalvar FULLSCREEN;
+FULLSCREEN = fs.windowed;
+window_set_fullscreen(FULLSCREEN);

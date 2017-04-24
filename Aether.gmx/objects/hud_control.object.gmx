@@ -35,6 +35,7 @@ for(i = 0; i &lt; 2; i++) {
         overButton[i] = false;
     }
 }
+
 MouseAction = false;
 button[0, 0] = "Set Work Area";
 button[1, 0] = "Auto Action";
@@ -45,6 +46,41 @@ x1 = 0;
 y1 = 0;
 x2 = 0;
 y2 = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Init Hotkeys
+for(i = 0; i &lt; 10; i++) {
+    number[i, 0] = 48+i;
+    hotkey[i] = false;
+}
+number[0, 1] = vk_numpad0;
+number[1, 1] = vk_numpad1;
+number[2, 1] = vk_numpad2;
+number[3, 1] = vk_numpad3;
+number[4, 1] = vk_numpad4;
+number[5, 1] = vk_numpad5;
+number[6, 1] = vk_numpad6;
+number[7, 1] = vk_numpad7;
+number[8, 1] = vk_numpad8;
+number[9, 1] = vk_numpad9;
 </string>
           </argument>
         </arguments>
@@ -122,7 +158,7 @@ for(i = 0; i &lt; array_length_1d(button);i++) {
                 break;
             }
         }
-    }
+    }   
 }
 if(SELECTED_VILLAGER != -1) {
     button[1, 1] = SELECTED_VILLAGER.ActionAuto;
@@ -136,6 +172,57 @@ if(mouse_check_button_pressed(mb_left)) {
     }
 }
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Update hotkeys
+for(i = 0; i &lt; array_length_1d(hotkey);i++) {
+    hotkey[i] = (keyboard_check_released(number[i, 0]) || keyboard_check_released(number[i, 1]));
+    
+    switch(i) {
+        case 0: break;
+        
+        case 1: 
+            if(SELECTED_VILLAGER != -1 &amp;&amp; hotkey[i]) 
+            {
+                selectingArea = true;
+                MouseAction = true;
+            }
+        break;
+        
+        case 2:
+            if(SELECTED_VILLAGER != -1 &amp;&amp; hotkey[i]) {
+                if(SELECTED_VILLAGER.ActionAuto) {
+                    SELECTED_VILLAGER.ActionAuto = false;
+                } else SELECTED_VILLAGER.ActionAuto = true;
+            }
+        break;
+        case 3: break;
+        case 4: break;
+        case 5: break;
+        case 6: break;
+        case 7: break;
+        case 8: break;
+        case 9: break;
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -347,6 +434,34 @@ if(SELECTED_VILLAGER != -1) {
 if(selectingArea &amp;&amp; SELECTED_VILLAGER != -1) {
     draw_circle(mouse_x,mouse_y,SELECTED_VILLAGER.workArea[2],1);
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Draw Hotkeys (DEBUG)
+/*
+for(i = 0; i &lt; 10; i++) {
+    draw_text(view_xview[0]+view_wview[0]/4*3
+             ,view_yview[0]+view_hview[0]/4+(i*48)
+             ,"Hotkey " +string(i)+": "+string(hotkey[i]));
+}
+*/
 </string>
           </argument>
         </arguments>

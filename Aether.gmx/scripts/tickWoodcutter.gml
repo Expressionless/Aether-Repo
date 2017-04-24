@@ -1,4 +1,4 @@
-#define villagerStates
+#define tickWoodcutter
 //Count Weight
 var b;
 total = 0;
@@ -11,15 +11,13 @@ weight = total;
 
 //Check state
 switch(state) {
-    case state.move: villagerMove();
+    case state.move: WoodcutterMove();
     break;
     
-    case state.action: villagerAction();
+    case state.action: WoodcutterAction();
     break;
     
     case state.idle:
-        desx = x;
-        desy = y;
         doAction = false;
         alarm[0] = -1;
         if(ActionAuto) {
@@ -31,18 +29,11 @@ switch(state) {
             else if (weight >= capacity-5) {
                 state = state.move;
             }
-        } else {
-            if(mouse_check_button_pressed(mb_right) && SELECTED_VILLAGER == id) {
-                desx = mouse_x;
-                desy = mouse_y;
-                desIsTarget = false;
-                state = state.move;
-            }
         }
     break;
 }
 
-#define villagerAction
+#define WoodcutterAction
 if(target != noone && weight < capacity-5) {
     speed = 0;
     if(instance_exists(target)) {
@@ -76,13 +67,12 @@ if(target != noone && weight < capacity-5) {
     state  = state.move;
 }
 
-#define villagerMove
+#define WoodcutterMove
 if(ActionAuto) {
     if(instance_exists(resource) && !(weight >= capacity-5)) {
         target = instance_nearest(workArea[0],workArea[1],resource);
         desx = target.x;
         desy = target.y;
-        desIsTarget = true;
         if(locateTarget(x,y,desx,desy) >= 16 && locateTarget(desx,desy,workArea[0],workArea[1]) <= workArea[2]) 
         {
             mp_potential_step_object(desx,desy,moveSpeed,village_parent);
@@ -99,21 +89,11 @@ if(ActionAuto) {
             desx = target.x;
             desy = target.y;
             if(locateTarget(x,y,desx,desy) <= 16) {
-                mp_potential_step_object(desx,desy,moveSpeed,village_parent);
+                mp_potential_step_object(desx,desx,moveSpeed,village_parent);
             } else {
                 desx = x;
                 desy = y;
             }
         } 
     } else state = state.idle;
-} else if(locateTarget(desx,desy,x,y) >= 16 && !desIsTarget) {
-    mp_potential_step_object(desx, desy, moveSpeed, village_parent);
 } else state = state.idle;
-if(!ActionAuto) {
-    if(mouse_check_button_pressed(mb_right) && SELECTED_VILLAGER == id) {
-        desx = mouse_x;
-        desy = mouse_y;
-        desIsTarget = false;
-        state = state.move;
-    }
-}

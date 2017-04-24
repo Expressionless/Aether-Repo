@@ -11,7 +11,8 @@ state = state.idle;
 //Local Scripts
 statInit(prof);
 villagerOptions();
-
+desx = x;
+desy = y;
 for(i = 0; i < array_height_2d(global.ITEM); i++) {
     for(j = 0; j < array_length_2d(global.ITEM, i); j++) 
     {
@@ -65,3 +66,4 @@ actionSprite = argument0;
 ActionAuto = true;
 target = noone;
 doAction = false;
+desIsTarget = false;

@@ -123,7 +123,7 @@ if(state == state.idle)
 } 
 else if(state == state.move) 
 {
-    image_speed = 1/moveSpeed;
+    image_speed = 0.5/moveSpeed;
     if(!sprite_exists(moveSprite)) {
         sprite_index = missingTexture;
     } else sprite_index = moveSprite;

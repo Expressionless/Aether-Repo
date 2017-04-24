@@ -115,6 +115,7 @@ if(SELECTED_VILLAGER == id) {
     draw_circle(workArea[0],workArea[1],workArea[2],1);
     //draw_text(x,y,string(target)+"#"+string(state));
 }
+draw_text(x,y,string(desx)+"/"+string(desy));
 </string>
           </argument>
         </arguments>

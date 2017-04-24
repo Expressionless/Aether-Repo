@@ -40,6 +40,7 @@
       <sprite>sprites\VillagerMiner</sprite>
       <sprite>sprites\VillagerWoodcutter</sprite>
     </sprites>
+    <sprite>sprites\checkBox</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -82,6 +83,7 @@
   <fonts name="fonts">
     <font>fonts\fnt_menu</font>
     <font>fonts\fnt_hud</font>
+    <font>fonts\fnt_tut</font>
   </fonts>
   <objects name="objects">
     <objects name="doodads">
@@ -109,10 +111,10 @@
     <objects name="HUD">
       <object>objects\obj_cursor</object>
       <object>objects\hud_control</object>
+      <object>objects\menuController</object>
+      <object>objects\TutorialControl</object>
     </objects>
-    <object>objects\menuController</object>
     <object>objects\terrainDebug</object>
-    <object>objects\TutorialControl</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\loadRoom</room>
