@@ -270,35 +270,7 @@ for(i = 0; i &lt; array_height_2d(button); i++) {
                     case menu.options:
                         switch(button[1, j]) {
                             case "Fullscreen":
-                                if(window_get_fullscreen()) {
-                                    //Maintain 1280x720 Resolution
-                                   /* var width = RES_WIDTH;
-                                    var height = RES_HEIGHT;
-                                    display_set_gui_size(width,height);
-                                    window_set_size(width,height);
-                                    var baseWidth = RES_WIDTH, baseHeight = RES_HEIGHT;
-                                    
-                                    if(width &gt;= height) {
-                                        var height = min(baseHeight, height);
-                                        var width = height * (width/height);
-                                    }
-                                    surface_resize(application_surface,width,height);*/
-                                    window_set_fullscreen(false);
-                                } else {
-                                    window_set_fullscreen(true);
-                                    //Maintain 1280x720 Resolution
-                                    var width = RES_WIDTH;
-                                    var height = RES_HEIGHT;
-                                    display_set_gui_size(width,height);
-                                    window_set_size(width,height);
-                                    var baseWidth = RES_WIDTH, baseHeight = RES_HEIGHT;
-                                    
-                                    if(width &gt;= height) {
-                                        var height = min(baseHeight, height);
-                                        var width = height * (width/height);
-                                    }
-                                    surface_resize(application_surface,width,height);
-                                }
+                                toggleFullscreen();
                             break;
                             
                             case "Keybinds":
@@ -369,6 +341,7 @@ for(i = 0; i &lt; array_height_2d(button); i++) {
 * draw_set_font(fnt_menu);
 * drawButton(x,y+96,225,72,"Play", 1, scale, scale);
 */
+draw_text(300,400,string(display_get_width()) + "x" + string(display_get_height()));
 draw_set_font(fnt_menu);
 for(i = 0; i &lt; array_length_2d(button, currentMenu); i++) {
 draw_set_alpha(.5+.25*overButton[currentMenu, i]);

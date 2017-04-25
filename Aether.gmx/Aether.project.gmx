@@ -83,6 +83,11 @@
       <script>scripts\manageSprite.gml</script>
     </scripts>
     <script>scripts\Hints.gml</script>
+    <scripts name="Menu Scripts">
+      <scripts name="Buttons">
+        <script>scripts\toggleFullscreen.gml</script>
+      </scripts>
+    </scripts>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_menu</font>

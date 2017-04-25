@@ -5,8 +5,8 @@ defineKeys();
 itemList();
 initStorage();
 globalvar RES_WIDTH,RES_HEIGHT;
-RES_WIDTH = 1366;
-RES_HEIGHT = 768;
+RES_WIDTH = 1280;
+RES_HEIGHT = 720;
 
 #define configSettings
 ///configSettings()
