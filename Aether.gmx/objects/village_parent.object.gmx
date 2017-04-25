@@ -71,7 +71,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>villagerTick(prof);
+            <string>if(!PAUSED) {
+    villagerTick(prof);
+}
 depth = y * -1;
 </string>
           </argument>
@@ -115,7 +117,8 @@ if(SELECTED_VILLAGER == id) {
     draw_circle(workArea[0],workArea[1],workArea[2],1);
     //draw_text(x,y,string(target)+"#"+string(state));
 }
-draw_text(x,y,string(desx)+"/"+string(desy));
+//draw_text(x,y,string(desx)+"/"+string(desy)+"
+//              #" + string(facing) + " " + string(abs(point_direction(x,y,mouse_x,mouse_y))));
 </string>
           </argument>
         </arguments>

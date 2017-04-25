@@ -26,6 +26,11 @@
           <argument>
             <kind>1</kind>
             <string>///Defining and Initializing Menu Buttons
+enum menu {
+    main,
+    options,
+    quit
+}
 buttonWidth = 225;
 buttonHeight = 72;
 for(i = 0; i &lt; 3; i++) {
@@ -54,7 +59,7 @@ textScale = .33;
 * draw_text(view_wview[0]/2,40,"Aether");
 */
 defunct = false;
-currentMenu = 0;
+currentMenu = menu.main;
 </string>
           </argument>
         </arguments>
@@ -125,6 +130,40 @@ button[2, 1] = "Windowed";
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Set background
+background_htiled[0] = true;
+background_vtiled[0] = true;
+randomize();
+background_vspeed[0] = choose(-1,-1.5,1,1.5);
+background_hspeed[0] = choose(-1,-1.5,1,1.5);
+
+if (display_aa &gt; 12) display_reset(8, true);
+else if (display_aa &gt; 6) display_reset(4, true);
+else if(display_aa &gt; 2) display_reset(2, true);
+//2 2x
+//6 2x 4x
+//12 4x 8x
+//14 2x 4x 8x
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="2" enumb="0">
       <action>
@@ -167,7 +206,7 @@ defunct = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Check Over Button and Button Events
+            <string>///Check Over Button
 
 //Set Button Count
 buttonCount = array_height_2d(button);
@@ -211,10 +250,11 @@ for(i = 0; i &lt; array_height_2d(button); i++) {
                 
                 //Check Which Button was clicked
                 switch(currentMenu) {
-                    case 0:
+                    case menu.main:
                         switch(button[0, j]) {
                             case "Play":
                                 room_goto(room0);
+                                draw_set_font(fnt_hud);
                             break;
                             
                             case "Options":
@@ -227,10 +267,38 @@ for(i = 0; i &lt; array_height_2d(button); i++) {
                         }
                     break;
                     
-                    case 1:
+                    case menu.options:
                         switch(button[1, j]) {
                             case "Fullscreen":
-                                currentMenu = 2;
+                                if(window_get_fullscreen()) {
+                                    //Maintain 1280x720 Resolution
+                                   /* var width = RES_WIDTH;
+                                    var height = RES_HEIGHT;
+                                    display_set_gui_size(width,height);
+                                    window_set_size(width,height);
+                                    var baseWidth = RES_WIDTH, baseHeight = RES_HEIGHT;
+                                    
+                                    if(width &gt;= height) {
+                                        var height = min(baseHeight, height);
+                                        var width = height * (width/height);
+                                    }
+                                    surface_resize(application_surface,width,height);*/
+                                    window_set_fullscreen(false);
+                                } else {
+                                    window_set_fullscreen(true);
+                                    //Maintain 1280x720 Resolution
+                                    var width = RES_WIDTH;
+                                    var height = RES_HEIGHT;
+                                    display_set_gui_size(width,height);
+                                    window_set_size(width,height);
+                                    var baseWidth = RES_WIDTH, baseHeight = RES_HEIGHT;
+                                    
+                                    if(width &gt;= height) {
+                                        var height = min(baseHeight, height);
+                                        var width = height * (width/height);
+                                    }
+                                    surface_resize(application_surface,width,height);
+                                }
                             break;
                             
                             case "Keybinds":
@@ -245,20 +313,6 @@ for(i = 0; i &lt; array_height_2d(button); i++) {
                             
                             case "Back":
                                 currentMenu = 0;
-                            break;
-                        }
-                    break;
-                    
-                    case 2:
-                        switch(button[2, j]) {
-                            case "Fullscreen":
-                                window_set_fullscreen(true);
-                                currentMenu = 1;
-                            break;
-                            
-                            case "Windowed":
-                                window_set_fullscreen(false);
-                                currentMenu = 1;
                             break;
                         }
                     break;
@@ -317,7 +371,7 @@ for(i = 0; i &lt; array_height_2d(button); i++) {
 */
 draw_set_font(fnt_menu);
 for(i = 0; i &lt; array_length_2d(button, currentMenu); i++) {
-draw_set_alpha(.5+.5*overButton[currentMenu, i]);
+draw_set_alpha(.5+.25*overButton[currentMenu, i]);
     drawButton(buttonX[currentMenu, i], buttonY[currentMenu, i] //Set X and Y Coordinate for drawing the specified Button
     , buttonWidth, buttonHeight, button[currentMenu, i], 1 //Set Width Height, and True for scalable text
     , textScale, textScale); //Set the scale for the text

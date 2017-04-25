@@ -106,50 +106,52 @@ button[3, 2] = originY[1]-buttonHeight[3]*3.5;
           <argument>
             <kind>1</kind>
             <string>///Check Button States
-for(i = 0; i &lt; array_height_2d(button); i++) {
-    var xx = abs(view_xview[0]+button[i, 1] + buttonWidth[i]/2 - mouse_x);
-    var yy = abs(view_yview[0]+button[i, 2] + buttonHeight[i]/2 - mouse_y);
-    overButton[i] = (xx &lt; buttonWidth[i]/2) &amp;&amp; (yy &lt; buttonHeight[i]/2);
-}
-
-currentHint = clamp(currentHint, 0, array_height_2d(tutorial));
-if(!neverShowHints) {
+if(!PAUSED) {
     for(i = 0; i &lt; array_height_2d(button); i++) {
-        if(mouse_check_button_pressed(mb_left)) {
-            if(overButton[i]) {
-                switch(button[i, 0]) {
-                    case "Prev":
-                        if(showHints) {
-                            if(currentHint&gt;0) currentHint--;
-                            else currentHint = array_height_2d(tutorial)-1;
-                        }
-                    break;
-                    
-                    case "Next":
-                        if(showHints) {
-                            if(currentHint&lt;array_height_2d(tutorial)-1) currentHint++;
-                            else currentHint = 0;
-                        }
-                    break;
-                    
-                    case "Close":
-                        if(!showHints) showHints = true
-                            else if(showHints &amp;&amp; !enableHide) showHints = false
-                            else if(showHints &amp;&amp; enableHide) 
-                            {
-                                showHints = false;
-                                neverShowHints = true;
+        var xx = abs(view_xview[0]+button[i, 1] + buttonWidth[i]/2 - mouse_x);
+        var yy = abs(view_yview[0]+button[i, 2] + buttonHeight[i]/2 - mouse_y);
+        overButton[i] = (xx &lt; buttonWidth[i]/2) &amp;&amp; (yy &lt; buttonHeight[i]/2);
+    }
+    
+    currentHint = clamp(currentHint, 0, array_height_2d(tutorial));
+    if(!neverShowHints) {
+        for(i = 0; i &lt; array_height_2d(button); i++) {
+            if(mouse_check_button_pressed(mb_left)) {
+                if(overButton[i]) {
+                    switch(button[i, 0]) {
+                        case "Prev":
+                            if(showHints) {
+                                if(currentHint&gt;0) currentHint--;
+                                else currentHint = array_height_2d(tutorial)-1;
                             }
-                    break;
-                    
-                    case "Hide":
-                        if(!enableHide) enableHide = true
-                            else enableHide = false;
-                    break;
-                    
-                    default:
-                    
-                    break;
+                        break;
+                        
+                        case "Next":
+                            if(showHints) {
+                                if(currentHint&lt;array_height_2d(tutorial)-1) currentHint++;
+                                else currentHint = 0;
+                            }
+                        break;
+                        
+                        case "Close":
+                            if(!showHints) showHints = true
+                                else if(showHints &amp;&amp; !enableHide) showHints = false
+                                else if(showHints &amp;&amp; enableHide) 
+                                {
+                                    showHints = false;
+                                    neverShowHints = true;
+                                }
+                        break;
+                        
+                        case "Hide":
+                            if(!enableHide) enableHide = true
+                                else enableHide = false;
+                        break;
+                        
+                        default:
+                        
+                        break;
+                    }
                 }
             }
         }
@@ -263,23 +265,23 @@ if(!neverShowHints) {
     var xx = view_xview[0]+button[2, 1];
     var yy = view_yview[0]+button[2, 2];
     
-    if(!showHints)
+    if(showHints)
     {
         draw_set_alpha(.75);
         draw_set_color(c_black);
         draw_set_alpha(1);
+        //Draw OverButton for Hide/Show Tutorials Permanent
+        draw_set_color(c_red);
+        draw_set_alpha(overButton[3]*0.5);
+        draw_rectangle(view_xview[0]+button[3,1], view_yview[0]+button[3,2], view_xview[0]+button[3,1]+buttonWidth[3],view_yview[0]+button[3,2]+buttonHeight[3], 0);
+        draw_set_alpha(1);
+        draw_sprite(checkBox, enableHide, view_xview[0]+button[3,1]+buttonWidth[3]/2,view_yview[0]+button[3,2]+buttonHeight[3]/2);
+        draw_set_color(c_white);
+        draw_set_halign(fa_left);
+        draw_set_font(fnt_tut);
+        draw_set_alpha(1);
+        draw_text(view_xview[0]+button[3, 1]+buttonWidth[3]*1.25, view_yview[0]+button[3, 2], "Never Show Tutorials (Change in Options)");
     }
-    //Draw OverButton for Hide/Show Tutorials Permanent
-    draw_set_color(c_red);
-    draw_set_alpha(overButton[3]*0.5);
-    draw_rectangle(button[3,1], button[3,2], button[3,1]+buttonWidth[3],button[3,2]+buttonHeight[3], 0);
-    draw_set_alpha(1);
-    draw_sprite(checkBox, enableHide, button[3,1]+buttonWidth[3]/2,button[3,2]+buttonHeight[3]/2);
-    draw_set_color(c_white);
-    draw_set_halign(fa_left);
-    draw_set_font(fnt_tut);
-    draw_set_alpha(1);
-    draw_text(button[3, 1]+buttonWidth[3]*1.25, button[3, 2], "Never Show Tutorials (Change in Options)");
     
 }
 </string>

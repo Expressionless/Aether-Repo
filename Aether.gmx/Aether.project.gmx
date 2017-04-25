@@ -41,8 +41,11 @@
       <sprite>sprites\VillagerWoodcutter</sprite>
     </sprites>
     <sprite>sprites\checkBox</sprite>
+    <sprite>sprites\menuBackground</sprite>
   </sprites>
-  <backgrounds name="background"/>
+  <backgrounds name="background">
+    <background>background\menu1</background>
+  </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
     <scripts name="Init">
@@ -59,6 +62,7 @@
     <scripts name="External Scripts">
       <script>scripts\locateTarget.gml</script>
       <script>scripts\drawButton.gml</script>
+      <script>scripts\draw_text_outline.gml</script>
     </scripts>
     <scripts name="HUD">
       <script>scripts\drawHud.gml</script>
@@ -113,12 +117,12 @@
       <object>objects\hud_control</object>
       <object>objects\menuController</object>
       <object>objects\TutorialControl</object>
+      <object>objects\PauseControl</object>
     </objects>
     <object>objects\terrainDebug</object>
   </objects>
   <rooms name="rooms">
-    <room>rooms\loadRoom</room>
-    <room>rooms\gffgf</room>
+    <room>rooms\rm_menu</room>
     <room>rooms\room0</room>
   </rooms>
   <help>

@@ -13,6 +13,7 @@ statInit(prof);
 villagerOptions();
 desx = x;
 desy = y;
+facing = 1;
 for(i = 0; i < array_height_2d(global.ITEM); i++) {
     for(j = 0; j < array_length_2d(global.ITEM, i); j++) 
     {
@@ -31,7 +32,7 @@ for(i = 0; i < array_height_2d(global.ITEM); i++) {
 * 
 */
 prof = argument0;
-moveSpeed = 1.5;
+moveSpeed = 2.5/(room_speed/30);;
 switch(prof) {
     case prof.woodc:
         actionSpeed = 7;

@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>state = mstate.selecting;
 overButton = false;
+depth = (room_height+10)*-1;
 </string>
           </argument>
         </arguments>
@@ -51,7 +52,7 @@ overButton = false;
             <kind>1</kind>
             <string>x=mouse_x;
 y=mouse_y;
-if(room = loadRoom) state = mstate.menu;
+if(room = rm_menu) state = mstate.menu;
 switch(state) {
     //Selecting Villagers
     case mstate.selecting:

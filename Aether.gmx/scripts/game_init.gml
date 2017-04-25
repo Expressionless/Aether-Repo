@@ -1,8 +1,22 @@
 #define game_init
 configSettings();
 initGlobals();
+defineKeys();
+itemList();
 initStorage();
+globalvar RES_WIDTH,RES_HEIGHT;
+RES_WIDTH = 1366;
+RES_HEIGHT = 768;
 
+#define configSettings
+///configSettings()
+enum fs {
+    windowed,
+    fullscreen
+}
+globalvar FULLSCREEN;
+FULLSCREEN = fs.windowed;
+window_set_fullscreen(FULLSCREEN);
 #define initGlobals
 enum prof {
     miner = VillagerMiner,
@@ -28,12 +42,28 @@ enum state {
     move,
     action
 }
+
+//Define the Tree Spawn Time
 globalvar TREE_SPAWN_TIME;
-TREE_SPAWN_TIME = 12*60*room_speed;
+//15*60*room_speed;
+TREE_SPAWN_TIME = 3*room_speed;
+
+//Define Selected Villager Variable
 globalvar SELECTED_VILLAGER;
 SELECTED_VILLAGER = -1;
+
+//Define Missing Texture File
 globalvar missingTexture;
 missingTexture = missingTex;
+
+globalvar PAUSED;
+PAUSED = false;
+
+#define defineKeys
+enum key {
+    paused
+}
+global.key[key.paused] = vk_escape;
 
 #define itemList
 enum res {
@@ -60,13 +90,14 @@ initItem(res.stone, false, 0); //Initialize stone w/o Variance
 
 #define initItem
 ///initItem(id, variant, variantAmount)
-var i = argument0;
-var v = argument1;
-var vA = argument2;
+var i = argument0; //Item ID
+var v = argument1; //Variance (True/False)
+var vA = argument2; //Variance Amount (0 if Variance = false)
 global.ITEM[i, IC.Variant] = v;
 if(v) {
     global.ITEM[i, IC.vA] = vA;
 } else global.ITEM[i, IC.vA] = 0;
+
 #define initStorage
 enum storage {
     minerals,
@@ -78,12 +109,3 @@ for(i = 0; i < 10; i++) {
     global.storage[storage.wood, i] = 0;
     global.storage[storage.food, i] = 0;
 }
-#define configSettings
-///configSettings()
-enum fs {
-    windowed,
-    fullscreen
-}
-globalvar FULLSCREEN;
-FULLSCREEN = fs.windowed;
-window_set_fullscreen(FULLSCREEN);

@@ -8,7 +8,15 @@
 * prof.basic = Basic (Unemployed/Unoccupied)
 * prof.farmer = Farmer
 */
-
+imgSpeed[0] = 0.18*moveSpeed;
+image_xscale = facing;
+if(locateTarget(x,y,desx,desy) >= 8) {
+    direction = point_direction(x,y,desx,desy);
+    //if Direction is >= 180, then facing = -1
+    //if Direction is <= 180, then facing = 1
+    if(direction > 90 && direction < 270) facing = -1
+    else facing = 1; 
+}
 var prof = argument0;
 switch (prof) {
 
@@ -45,7 +53,7 @@ if(state == state.idle)
 } 
 else if(state == state.move) 
 {
-    image_speed = 1/moveSpeed;
+    image_speed = imgSpeed[0];
     if(!sprite_exists(moveSprite)) {
         sprite_index = missingTexture;
     } else sprite_index = moveSprite;
@@ -71,7 +79,7 @@ if(state == state.idle)
 } 
 else if(state == state.move) 
 {
-    image_speed = 1/moveSpeed;
+    image_speed = imgSpeed[0];
     if(!sprite_exists(moveSprite)) {
         sprite_index = missingTexture;
     } else sprite_index = moveSprite;
@@ -97,7 +105,7 @@ if(state == state.idle)
 } 
 else if(state == state.move) 
 {
-    image_speed = 1/moveSpeed;
+    image_speed = imgSpeed[0];
     if(!sprite_exists(moveSprite)) {
         sprite_index = missingTexture;
     } else sprite_index = moveSprite;
@@ -123,7 +131,7 @@ if(state == state.idle)
 } 
 else if(state == state.move) 
 {
-    image_speed = 0.5/moveSpeed;
+    image_speed = imgSpeed[0];
     if(!sprite_exists(moveSprite)) {
         sprite_index = missingTexture;
     } else sprite_index = moveSprite;
@@ -149,7 +157,7 @@ if(state == state.idle)
 } 
 else if(state == state.move) 
 {
-    image_speed = 1/moveSpeed;
+    image_speed = imgSpeed[0];
     if(!sprite_exists(moveSprite)) {
         sprite_index = missingTexture;
     } else sprite_index = moveSprite;
